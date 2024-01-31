@@ -5,12 +5,15 @@
   </head>
   <body>
     <img src="{{ url_for('static', filename = 'img/'+img.filename) }}" alt="{{img.filename}}">
-    <p>{{img.title}}</p>
+    <p>{{img.title}}<br>
+      <a href="{{ url_for('rename', image_id=img.id) }}">Přejmenovat...</a>
+
+    </p>
     <p>
 
-        <a href="{{ url_for('vim', image_id=img.id, vim=1) }}">vim</a> 
+        <a href="{{ url_for('vim', image_id=img.id, vim=1) }}">Vim!</a> 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ url_for('vim', image_id=img.id, vim=0) }}">nevim</a> 
+        <a href="{{ url_for('vim', image_id=img.id, vim=0) }}">Nevim...</a> 
     </p>
   </body>
 </html>

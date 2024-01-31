@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BioTest</title>
+  </head>
+  <body>
+    <h1>
+        Přejmenovat {{img.title}}
+    </h1>
+    <form method="post">
+      <hidden name="image_id" value="{{img.id}}"/>  
+      Název: <input name="title"/>
+      <br/><br/>
+      <button type="submit">Potvrdit</button>
+    </form>
+  </body>
+</html>

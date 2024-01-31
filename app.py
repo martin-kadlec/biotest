@@ -73,4 +73,15 @@ def vim(image_id: int, vim: int):
 
     return redirect("/rand")
 
+@app.route("/rename/<int:image_id>", methods=["GET", "POST"])
+def rename(image_id: int):
+    if request.method == "POST":
+        image = db.get_or_404(Image, image_id)
+        image.title = request.form["title"]
+        db.session.commit()
+        return redirect("/rand")
+    if request.method == "GET":
+        image = db.get_or_404(Image, image_id)
+        return render_template("rename.html", img=image)
+
 
