@@ -18,6 +18,7 @@ class Guess(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     created: Mapped[datetime] = mapped_column(server_default=func.now())
     image_id: Mapped[int] = mapped_column(ForeignKey("image.id"))
+    passed: Mapped[int] = mapped_column()
 
     image: Mapped["Image"] = relationship(back_populates="guesses")
 

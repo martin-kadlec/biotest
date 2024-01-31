@@ -26,7 +26,7 @@ def init_db():
 
 def add_images():
     with app.app_context():
-        img_path = Path(os.path.dirname(__file__)) / "img"
+        img_path = Path(os.path.dirname(__file__)) / "static" / "img"
         images = [i.name for i in img_path.glob("*.png")]
         db_images = set((i.filename for i in Image.query.all()))
 
@@ -45,8 +45,32 @@ def add_images():
 def index():
     return render_template("index.html")
 
+@app.route("/reset")
+def reset():
+    reset_db()
+    add_images()
+    return redirect("/rand")
+    
 @app.route("/rand")
 def rand():
     images = Image.query.all()
     rimg = images[random.randint(0, len(images)-1)]
     return render_template("guess.html", img=rimg)
+
+@app.route("/check/<int:image_id>")
+def check(image_id: int):
+    image = db.get_or_404(Image, image_id)
+    return render_template("check.html", img=image)
+
+@app.route("/vim/<int:image_id>/<int:vim>")
+def vim(image_id: int, vim: int):
+    guess = Guess()
+    guess.image_id = image_id
+    guess.passed = vim
+    
+    db.session.add(guess)
+    db.session.commit()
+
+    return redirect("/rand")
+
+
