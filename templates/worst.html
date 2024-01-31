@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BioTest</title>
+  </head>
+  <body>
+    <h1>Worst</h1>
+
+    {% for img, bad, good in worst %}
+        <p> <img height=64 src="{{ url_for('static', filename = 'img/'+img.filename) }}"/> 
+            <a href="{{ url_for('rename', image_id=img.id) }}">{{ img.title }}</a> 
+            ({{ bad }} / {{ bad + good }})</p>
+    {% endfor  %}
+
+
+    <p><br/><br/><a href="{{ url_for('home') }}"">home</a></p>
+  </body>
+</html>

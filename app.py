@@ -41,8 +41,13 @@ def add_images():
 
 # views
 
+
 @app.route("/")
 def index():
+    return render_template("index.html")
+
+@app.route("/home")
+def home():
     return render_template("index.html")
 
 @app.route("/reset")
@@ -96,5 +101,23 @@ def rename(image_id: int):
     if request.method == "GET":
         image = db.get_or_404(Image, image_id)
         return render_template("rename.html", img=image)
+    
+@app.route("/worst")
+def worst():
+    images = Image.query.all()
+    guesses = Guess.query.all()
+
+    ii = [i.id for i in images]
+    gpi = [g.image_id for g in guesses if g.passed == 1]
+    gfi = [g.image_id for g in guesses if g.passed == 0]
+
+    missing = [i for i in ii if not i in gpi and not i in gfi]
+
+    failed = [i for i in ii if i in gfi]
+
+    worst = [(db.get_or_404(Image, i), gfi.count(i), gpi.count(i)) for i in ii]
+    worst = sorted(worst, key=lambda x: 20*x[1]-x[2], reverse=True)
+
+    return render_template("worst.html", worst=worst)
 
 

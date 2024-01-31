@@ -6,8 +6,9 @@
   <body>
     <p>
       <a href="{{ url_for('check', image_id=img.id) }}">
-    <img src="{{ url_for('static', filename = 'img/'+img.filename) }}" alt="{{img.filename}}">
-  </a>
+    <img src="{{ url_for('static', filename = 'img/'+img.filename) }}" alt="{{img.filename}}" style='height: 70%; width: 95%; object-fit: contain'>
     </p>
+
+    <p><br/><br/><a href="{{ url_for('home') }}"">home</a></p>
   </body>
 </html>
