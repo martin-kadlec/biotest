@@ -4,16 +4,19 @@
     <title>BioTest</title>
   </head>
   <body>
-    <img src="{{ url_for('static', filename = 'img/'+img.filename) }}" alt="{{img.filename}}">
-    <p>{{img.title}}<br>
-      <a href="{{ url_for('rename', image_id=img.id) }}">Přejmenovat...</a>
-
-    </p>
     <p>
+    <a href="{{ url_for('vim', image_id=img.id, vim=1) }}">Vim!</a> 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{{ url_for('vim', image_id=img.id, vim=0) }}">Nevim...</a> 
+  </p>
+<hr>
+  <p>{{img.title}}<br>
+    <a href="{{ url_for('rename', image_id=img.id) }}">Přejmenovat...</a>
 
-        <a href="{{ url_for('vim', image_id=img.id, vim=1) }}">Vim!</a> 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{{ url_for('vim', image_id=img.id, vim=0) }}">Nevim...</a> 
-    </p>
+  </p>
+ 
+  <p>
+    <img src="{{ url_for('static', filename = 'img/'+img.filename) }}" alt="{{img.filename}}">
+  </p>
   </body>
 </html>

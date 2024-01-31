@@ -54,7 +54,20 @@ def reset():
 @app.route("/rand")
 def rand():
     images = Image.query.all()
-    rimg = images[random.randint(0, len(images)-1)]
+    guesses = Guess.query.all()
+
+    ii = [i.id for i in images]
+    gpi = [g.image_id for g in guesses if g.passed == 1]
+    gfi = [g.image_id for g in guesses if g.passed == 0]
+
+    missing = [i for i in ii if not i in gpi and not i in gfi]
+
+    failed = [i for i in ii if i in gfi]
+
+    all = ii + 5*missing + 20*failed
+
+    rid = all[random.randint(0, len(all)-1)]
+    rimg = db.get_or_404(Image, rid)
     return render_template("guess.html", img=rimg)
 
 @app.route("/check/<int:image_id>")
@@ -79,7 +92,7 @@ def rename(image_id: int):
         image = db.get_or_404(Image, image_id)
         image.title = request.form["title"]
         db.session.commit()
-        return redirect("/rand")
+        return redirect(f"/vim/{image_id}/0")
     if request.method == "GET":
         image = db.get_or_404(Image, image_id)
         return render_template("rename.html", img=image)
